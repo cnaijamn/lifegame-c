@@ -16,20 +16,37 @@ make
 
 `/usr/local/`に置きたい場合:
 ```sh
-sudo cp lifegame /usr/local/bin/
+sudo cp bin/lifegame /usr/local/bin/
 ```
 
-自分専用に置きたい場合: (`$HOME/wrk/` etc.)
+自分専用に置きたい場合: (`$HOME/.diy/`)
 ```sh
-mkdir -p ~/wrk/bin
+pushd ..
+csh ./set-my-diy.csh
+popd
 
 # csh/tcsh なら .cshrc に追加
 vi ~/.cshrc
 --------------------
-setenv PATH $HOME/wrk/bin:$PATH
+set DIY = $HOME/.diy
+if (-d $DIY) then
+        # bin
+        setenv PATH $DIY/bin:$PATH
+        # lib
+        if ($?LD_LIBRARY_PATH) then
+                setenv LD_LIBRARY_PATH $DIY/lib:$LD_LIBRARY_PATH
+        else
+                setenv LD_LIBRARY_PATH $DIY/lib
+        endif
+        # pkgconf
+        alias pkgconf   pkgconf --define-prefix
+        if ($?PKG_CONFIG_PATH) then
+                setenv PKG_CONFIG_PATH $DIY/libdata/pkgconfig:$PKG_CONFIG_PATH
+        else
+                setenv PKG_CONFIG_PATH $DIY/libdata/pkgconfig
+        endif
+endif
 --------------------
-
-cp lifegame ~/wrk/bin/
 ```
 
 削除するなら:

@@ -1,11 +1,3 @@
-PROG=	lifegame
-MAN=
-LDADD=	-lncurses
+SUBDIR=	bin
 
-SRCS=	lifegame.c
-
-WARNS=	3
-CFLAGS+=
-LDFLAGS+=
-
-.include <bsd.prog.mk>
+.include <bsd.subdir.mk>
