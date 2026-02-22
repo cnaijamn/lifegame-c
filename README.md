@@ -61,4 +61,5 @@ make cleandir
 ```
 % lifegame
 ```
+![Demo](demo.gif)
 
